@@ -8,3 +8,11 @@ const RepoList = (props) => (
 )
 
 export default RepoList;
+
+//var GroceryList = (props) => (
+//   <ul>
+//     {props.items.map(item =>
+//       <GroceryListItem item={item} />
+//     )}
+//   </ul>
+// );

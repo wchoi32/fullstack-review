@@ -10,12 +10,23 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
-
   }
 
   search (term) {
     console.log(`${term} was searched`);
     // TODO
+    $.ajax({
+      url: '/repos',
+      type: 'POST',
+      contentType: 'application/json', 
+      data: term,
+      success: function(data) {
+        console.log('sent')
+      },
+      error: function(err) {
+        console.log('Failed to Send', err)
+      }
+    });
   }
 
   render () {
@@ -28,3 +39,17 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+// getYouTubeVideos(query) {
+//   var options = {
+//     key: this.props.API_KEY,
+//     query: query
+//   };
+
+//   this.props.searchYouTube(options, (videos) =>
+//     this.setState({
+//       videos: videos,
+//       currentVideo: videos[0]
+//     })
+//   );
+// }
