@@ -1,28 +1,28 @@
-import { callbackify } from 'util';
-
 const request = require('request');
 const config = require('../config.js');
 
-let getReposByUsername = (/* TODO */) => {
+let getReposByUsername = (user, callback) => {
   // TODO - Use the request module to request repos for a specific
   // user from the github API
 
   // The options object has been provided to help you out, 
   // but you'll have to fill in the URL
   let options = {
-    url: 'https://api.github.com',
+    url: 'https://api.github.com/users/' + user + '/repos',
     headers: {
       'User-Agent': 'request',
       'Authorization': `token ${config.TOKEN}`
     }
   };
 
-  request(options, (err, resp, body) => {
-    if(!err && resp.statusCode === 200) {
-      var repos = JSON.parse(body);
-      console.log("its working ", body);
+  request(options, (err, res) => {
+    if (err) {
+      throw err;
+    } else {
+        var repos = JSON.parse(res.body);
+        callback(repos);
     }
-  })
+  });
 }
 
 module.exports.getReposByUsername = getReposByUsername;

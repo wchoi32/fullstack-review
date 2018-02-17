@@ -7,15 +7,34 @@ let repoSchema = mongoose.Schema({
   repoName: String,
   description: String, 
   htmlUrl: String,
-  updatedAt: Date
+  updatedAt: String
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo) => {
-  
+  var newRepo = new Repo ({
+    userName: repo.owner.login, 
+    repoName: repo.name,
+    description: repo.description, 
+    htmlUrl: repo["html_url"],
+    updatedAt: repo["updated_at"],
+  });
+
+  newRepo.save((err, newRepo) => {
+    if (err) return err;
+  });
+  // repo.find({}, function(err, collection) {
+  //   console.log(collection);
+  // });
 }
 
+let retrieve = () => {
+  Repo.find({}, (err, collection) => {
+    console.log(collection)
+  });
+}
+module.exports.retrieve = retrieve;
 module.exports.save = save;
 
 // let save = (/* TODO */) => {
