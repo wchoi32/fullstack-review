@@ -24,10 +24,10 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  // for (var i = 0 ; i < 25; i++) {
-
-  // }
-  index.retrieve();
+  index.retrieve((data, err) => {
+    if (err) throw err;
+    res.end(JSON.stringify(data));
+  });
 });
 
 let port = 1128;

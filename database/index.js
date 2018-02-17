@@ -29,11 +29,12 @@ let save = (repo) => {
   // });
 }
 
-let retrieve = () => {
+let retrieve = (callback) => {
   Repo.find({}, (err, collection) => {
-    console.log(collection)
-  });
+    callback(collection)
+  }).limit(25).sort({updatedAt: -1});
 }
+
 module.exports.retrieve = retrieve;
 module.exports.save = save;
 

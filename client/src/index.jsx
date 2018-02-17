@@ -14,6 +14,7 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
+    let hello;
     // TODO
     $.ajax({
       url: '/repos',
@@ -21,13 +22,52 @@ class App extends React.Component {
       contentType: 'text/plain', 
       data: term,
       success: function(data) {
-        console.log('sent')
+        console.log('sent');
       },
       error: function(err) {
         console.log('Failed to Send', err)
       }
     });
+
+    $.ajax({
+      url: '/repos',
+      type: 'GET',
+      contentType: 'application/json', 
+      success: (receivedData) => { 
+        var received = JSON.parse(receivedData)
+        // console.log(typeof received);
+        this.setState({
+          repos: received
+        })
+      },
+      error: function(err) {
+        console.log('Failed to Fetch', err)
+      }
+    });
   }
+
+  // processData(data) {
+  //   this.setState({
+  //     repos: data;
+  //   })
+  // }
+
+  // fetch () {
+  //   $.ajax({
+  //     url: '/repos',
+  //     type: 'GET',
+  //     contentType: 'application/json', 
+  //     success: function(receivedData) {
+  //       console.log(receivedData)
+  //       // this.setState({
+  //       //   data: receivedData
+  //       // });
+  //     },
+  //     error: function(err) {
+  //       console.log('Failed to Fetch', err)
+  //     }
+  //   });
+  // }
 
   render () {
     return (<div>
@@ -39,17 +79,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-// getYouTubeVideos(query) {
-//   var options = {
-//     key: this.props.API_KEY,
-//     query: query
-//   };
-
-//   this.props.searchYouTube(options, (videos) =>
-//     this.setState({
-//       videos: videos,
-//       currentVideo: videos[0]
-//     })
-//   );
-// }
